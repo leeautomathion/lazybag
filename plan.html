@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 自動化內容系統｜方案說明</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown-dark: #2C1810;
+    --brown-mid: #5C3317;
+    --brown-warm: #8B4513;
+    --gold: #C8963E;
+    --gold-light: #E8B86D;
+    --cream: #FAF6F0;
+    --cream-dark: #F0E8DC;
+    --text-dark: #1A0F0A;
+    --text-mid: #4A3020;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'Noto Sans TC', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--brown-dark);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,62,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+
+  .badge {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 7vw, 48px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span { color: var(--gold-light); }
+
+  .hero-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 15px;
+    line-height: 1.9;
+    max-width: 360px;
+    margin-bottom: 0;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 80px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(24px, 6vw, 34px);
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+
+  .section p {
+    color: var(--text-mid);
+    line-height: 1.9;
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  /* PROCESS */
+  .process-bg {
+    background: var(--cream-dark);
+    padding: 80px 24px;
+  }
+
+  .process-inner { max-width: 480px; margin: 0 auto; }
+
+  .step-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  .step-num {
+    position: absolute;
+    top: -12px; right: 20px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(200,150,62,0.15);
+    line-height: 1;
+  }
+
+  .step-tag {
+    display: inline-block;
+    background: var(--cream-dark);
+    color: var(--brown-warm);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .step-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  /* PROOF */
+  .proof-section {
+    background: var(--brown-dark);
+    padding: 80px 24px;
+  }
+
+  .proof-inner { max-width: 480px; margin: 0 auto; }
+
+  .result-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,150,62,0.2);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 24px;
+  }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .result-row:last-child { border-bottom: none; }
+  .result-label { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .result-val { font-size: 15px; color: var(--gold-light); font-weight: 500; }
+
+  /* PRICING */
+  .pricing-section {
+    padding: 80px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .plan-card {
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .plan-card.basic {
+    background: #fff;
+    border: 1px solid var(--cream-dark);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  .plan-card.bundle {
+    background: var(--brown-dark);
+    border: 2px solid var(--gold);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .plan-name {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .plan-card.basic .plan-name { color: var(--brown-warm); }
+  .plan-card.bundle .plan-name { color: var(--gold); }
+
+  .plan-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .plan-card.basic .plan-title { color: var(--text-dark); }
+  .plan-card.bundle .plan-title { color: #fff; }
+
+  .plan-price {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .plan-card.basic .plan-price { color: var(--text-dark); }
+  .plan-card.bundle .plan-price { color: var(--gold-light); }
+
+  .plan-monthly {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .plan-card.basic .plan-monthly { color: var(--text-mid); }
+  .plan-card.bundle .plan-monthly { color: rgba(255,255,255,0.5); }
+
+  .plan-features { list-style: none; }
+
+  .plan-features li {
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-mid);
+  }
+
+  .plan-card.bundle .plan-features li {
+    border-color: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.8);
+  }
+
+  .plan-features li:last-child { border: none; }
+
+  /* FAQ */
+  .faq-section {
+    background: var(--cream-dark);
+    padding: 80px 24px;
+  }
+
+  .faq-inner { max-width: 480px; margin: 0 auto; }
+
+  .faq-item {
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 18px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-q::after { content: '＋'; color: var(--gold); font-size: 18px; }
+  .faq-item.open .faq-q::after { content: '－'; }
+
+  .faq-a {
+    display: none;
+    padding: 0 20px 18px;
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--brown-dark);
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,62,0.12) 0%, transparent 70%);
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cta-section h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .cta-section h2 em { color: var(--gold-light); font-style: normal; }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    margin-bottom: 40px;
+    line-height: 1.9;
+  }
+
+  .btn-line {
+    display: inline-block;
+    background: #06C755;
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(6,199,85,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-line:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(6,199,85,0.4); }
+
+  .cta-steps {
+    max-width: 360px;
+    margin: 0 auto 40px;
+    text-align: left;
+  }
+
+  .cta-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .cta-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+  }
+
+  .cta-step-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    padding-top: 4px;
+  }
+
+  .cta-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    margin-top: 8px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    background: var(--brown-dark);
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .divider blockquote {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(18px, 5vw, 26px);
+    color: #fff;
+    line-height: 1.7;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .divider blockquote em { color: var(--gold-light); font-style: normal; }
+
+  /* FADE */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">完整方案說明</div>
+  <h1>這套系統，<br>是怎麼讓你<br><span>睡覺也在產出內容</span>的？</h1>
+  <p class="hero-sub" style="margin-top:20px;">從流程到報價，這裡全部告訴你。<br>看完之後，直接回覆 LINE 告訴我你要哪個方案。</p>
+</section>
+
+<!-- PROCESS -->
+<section class="process-bg">
+  <div class="process-inner fade-up">
+    <div class="section-label">系統運作流程</div>
+    <h2 style="font-family:'Noto Serif TC',serif;font-size:clamp(24px,6vw,32px);font-weight:900;margin-bottom:32px;">AI 怎麼替你工作的？</h2>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-tag">一次設定</div>
+      <div class="step-title">告訴 AI 你的賽道</div>
+      <div class="step-desc">輸入你的主題關鍵字，系統鎖定你的賽道。長期有效，隨時可調整，不需要每週重新設定。</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-tag">每週自動</div>
+      <div class="step-title">AI 掃描同賽道爆款</div>
+      <div class="step-desc">系統從 TikTok、Instagram Reels、YouTube Shorts 三大平台自動抓取，篩選 50 萬次觀看以上的爆款，分析其內容結構與邏輯。</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-tag">自動生成</div>
+      <div class="step-title">7 篇輪播 ＋ 7 篇 Reels 腳本</div>
+      <div class="step-desc">根據爆款邏輯，自動生成完整貼文與拍攝腳本。輪播含圖含文，Reels 腳本含場景說明與說話重點，整齊寄到你信箱。</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-tag">你只需要</div>
+      <div class="step-title">收信、下載、發出去</div>
+      <div class="step-desc">週一收信，打開附件，貼文拿來就發，Reels 拿來就拍。腳本、圖片全都準備好了，你只需要決定發不發。</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof-section">
+  <div class="proof-inner fade-up">
+    <div class="section-label">實際成果</div>
+    <h2 style="font-family:'Noto Serif TC',serif;font-size:clamp(24px,6vw,32px);font-weight:900;color:#fff;margin-bottom:8px;">系統上線後，<br>實際省下了什麼？</h2>
+    <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:0;">以飲食教練帳號為例</p>
+    <div class="result-card">
+      <div class="result-row">
+        <span class="result-label">每週腳本發想時間</span>
+        <span class="result-val">0 小時（原本 4hr）</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">每週產出輪播貼文</span>
+        <span class="result-val">7 篇（全自動）</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">每週 Reels 腳本</span>
+        <span class="result-val">7 篇（全自動）</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">每週省下時間</span>
+        <span class="result-val">4～6 小時</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">系統設定時間</span>
+        <span class="result-val">一次設定，長期使用</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <blockquote>
+    「不是省時間，<br>是把時間還給<em>真正重要的事</em>。」
+  </blockquote>
+</div>
+
+<!-- PRICING -->
+<section class="pricing-section fade-up">
+  <div class="section-label">方案報價</div>
+  <h2>選你需要的模組</h2>
+  <p style="color:var(--text-mid);font-size:14px;margin-bottom:32px;line-height:1.8;">買斷制，一次擁有，長期使用。<br>維護費遠低於外包一張輪播圖。</p>
+
+  <div class="plan-card basic">
+    <div class="plan-name">模組 A</div>
+    <div class="plan-title">IG 輪播貼文全自動</div>
+    <div class="plan-price">NT$18,000</div>
+    <div class="plan-monthly">買斷｜月維護 NT$2,500</div>
+    <ul class="plan-features">
+      <li>✦ 每週自動生成 7 篇輪播貼文</li>
+      <li>✦ AI 爆款趨勢分析</li>
+      <li>✦ 含圖含文，PNG 直接下載</li>
+      <li>✦ 自動寄送至指定信箱</li>
+      <li>✦ 15 個節點系統架構</li>
+    </ul>
+  </div>
+
+  <div class="plan-card basic">
+    <div class="plan-name">模組 B</div>
+    <div class="plan-title">Reels 爆款腳本全自動</div>
+    <div class="plan-price">NT$5,888</div>
+    <div class="plan-monthly">買斷｜月維護 NT$3,000／3個月</div>
+    <ul class="plan-features">
+      <li>✦ 每週自動生成 7 篇 Reels 腳本</li>
+      <li>✦ 同賽道爆款結構分析</li>
+      <li>✦ 場景、說話重點全部寫好</li>
+      <li>✦ 自動寄送至指定信箱</li>
+    </ul>
+  </div>
+
+  <div class="plan-card bundle">
+    <div class="plan-badge">最划算</div>
+    <div class="plan-name">組合方案</div>
+    <div class="plan-title">輪播 ＋ 腳本全包</div>
+    <div class="plan-price">NT$21,888</div>
+    <div class="plan-monthly">買斷｜月維護 NT$3,500</div>
+    <ul class="plan-features">
+      <li>✦ 模組 A ＋ 模組 B 全部功能</li>
+      <li>✦ 每週 7 篇輪播 ＋ 7 篇腳本</li>
+      <li>✦ 24 小時不間斷自動產出</li>
+      <li>✦ 完全掌握自己的帳號主導權</li>
+      <li>✦ 維護費遠低於外包一張圖</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner fade-up">
+    <div class="section-label">常見問題</div>
+    <h2 style="font-family:'Noto Serif TC',serif;font-size:clamp(22px,5vw,30px);font-weight:900;margin-bottom:32px;">你可能想問的</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">我完全不懂技術，可以用嗎？</div>
+      <div class="faq-a">可以。系統由我幫你設定好，你只需要告訴我你的賽道關鍵字，之後收信就能用，不需要碰任何技術。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">設定要多久？什麼時候可以開始用？</div>
+      <div class="faq-a">付款後 3～5 個工作天完成設定，設定完成後下一週就會開始自動產出內容。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">生成的內容品質如何？我可以修改嗎？</div>
+      <div class="faq-a">系統根據爆款邏輯生成，內容架構完整。你可以自由修改文字、顏色、細節，讓內容更符合你的個人風格。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">帳號安全嗎？會不會被看到我的密碼？</div>
+      <div class="faq-a">完全不需要提供任何帳號密碼。系統只需要你的 Email 收件地址，內容生成後自動寄給你，帳號主導權完全在你手上。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">維護費是做什麼用的？</div>
+      <div class="faq-a">維護費用於系統每週正常運作、API 費用、以及當平台政策調整時的系統維護與更新。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">我可以之後再加購另一個模組嗎？</div>
+      <div class="faq-a">可以。模組可以分開購買，之後想加也沒問題，費用依當時報價計算。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">你們用哪些平台抓爆款？</div>
+      <div class="faq-a">系統從 TikTok、Instagram Reels、YouTube Shorts 三大平台輪替抓取，每週篩選 50 萬次觀看以上的爆款內容，分析其結構與邏輯再生成腳本，確保來源多元、內容不重複。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">系統能保證我的粉絲會增長嗎？</div>
+      <div class="faq-a">系統提供的是爆款結構分析與內容生成服務。實際成效受拍攝品質、發文頻率、平台演算法等因素影響，不保證特定流量或粉絲增長結果。系統的價值在於大幅降低創作門檻、節省發想時間。</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>決定好了嗎？<br>直接回覆 LINE<br>告訴我你要<em>哪個方案</em></h2>
+  <p style="margin-bottom:32px;">不需要填表單，不需要預約。<br>直接回覆「模組 A」、「模組 B」或「組合方案」，<br>我看到後會直接跟你確認細節。</p>
+
+  <div class="cta-steps">
+    <div class="cta-step">
+      <div class="cta-step-num">1</div>
+      <div class="cta-step-text">回覆你想要的方案名稱</div>
+    </div>
+    <div class="cta-step">
+      <div class="cta-step-num">2</div>
+      <div class="cta-step-text">我確認你的賽道關鍵字與收件 Email</div>
+    </div>
+    <div class="cta-step">
+      <div class="cta-step-num">3</div>
+      <div class="cta-step-text">付款後 3～5 個工作天完成設定，下週開始收到內容</div>
+    </div>
+  </div>
+
+  <a href="https://line.me/R/ti/p/@386mbtxu" class="btn-line">💬 回覆 LINE 選擇方案 →</a>
+  <div class="cta-note">加入後直接跟我說你要哪個，不需要再填任何資料</div>
+</section>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.parentElement.classList.toggle('open');
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
